@@ -50,15 +50,22 @@ public class FindLadders {
         list.clear();
         list.add(beginWord);
 
-
         List<String> tempList = new ArrayList<>();
+        result.add(tempList);
+        int i = 0;
         while (!list.isEmpty()) {
             String word = list.remove(0);
-            tempList.add(word);
-            if(word.equals(endWord)){
+            List<String> tmp = mapper.get(word);
+            if (tmp == null || tmp.isEmpty()) {
+                tempList = result.get(++i);
+            } else if (tmp.size() == 1) {
+                tempList.add(word);
+            } else if (tmp.size() > 1) {
+                tempList.add(word);
                 result.add(new ArrayList<>(tempList));
+                System.out.println(result);
             }
-            list.addAll(0, mapper.get(word));
+            list.addAll(0, tmp);
         }
 
         return result;
